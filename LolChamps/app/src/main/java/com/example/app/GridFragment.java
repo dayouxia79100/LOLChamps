@@ -1,16 +1,22 @@
 package com.example.app;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -64,19 +70,45 @@ public class GridFragment extends Fragment {
 
         // create a new ImageView for each item referenced by the Adapter
         public View getView(int position, View convertView, ViewGroup parent) {
+            LinearLayout linearLayout;
+            TextView textView;
             ImageView imageView;
             if (convertView == null) {  // if it's not recycled, initialize some attributes
+
+                linearLayout = new LinearLayout(mContext);
+                linearLayout.setGravity(Gravity.CENTER);
                 imageView = new ImageView(mContext);
+                textView = new TextView(mContext);
+
+
+                textView.setText(mChamps[position]);
+                textView.setTextColor(Color.WHITE);
+
+
+
+
+                textView.setGravity(Gravity.CENTER);
+                textView.setGravity(Gravity.CENTER_HORIZONTAL);
+
+
+
                 imageView.setLayoutParams(new GridView.LayoutParams(150, 150));
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 imageView.setPadding(8, 8, 8, 8);
+                linearLayout.addView(textView);
+                linearLayout.addView(imageView);
+                linearLayout.setOrientation(1);
             } else {
-                imageView = (ImageView) convertView;
+                linearLayout = (LinearLayout) convertView;
             }
 
-            imageView.setImageResource(mThumbIds[position]);
 
-            return imageView;
+            ((ImageView)linearLayout.getChildAt(1)).setImageResource(mThumbIds[position]);
+
+
+
+
+            return linearLayout;
         }
 
         // references to our images
@@ -85,6 +117,14 @@ public class GridFragment extends Fragment {
                 R.drawable.akali, R.drawable.alistar,
                 R.drawable.amumu, R.drawable.anivia,
                 R.drawable.annie
+        };
+
+
+        private  String[] mChamps = {
+                "Aatrox", "Ahri",
+                "Akali", "Alistar",
+                "Amumu", "Anivia",
+                "Annie"
         };
     }
 
